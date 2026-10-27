@@ -68,6 +68,7 @@ type uaParser struct {
 	V1Replacement     string  `yaml:"v1_replacement"`
 	V2Replacement     string  `yaml:"v2_replacement"`
 	V3Replacement     string  `yaml:"v3_replacement"`
+	V4Replacement     string  `yaml:"v4_replacement"`
 	_                 [4]byte // padding for alignment
 	MatchesCount      uint64
 }
@@ -95,6 +96,9 @@ func (uap *uaParser) setDefaults() {
 	}
 	if uap.V3Replacement == "" {
 		uap.V3Replacement = "$4"
+	}
+	if uap.V4Replacement == "" {
+		uap.V4Replacement = "$5"
 	}
 }
 

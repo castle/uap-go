@@ -1,10 +1,11 @@
 package uaparser
 
 type UserAgent struct {
-	Family string
-	Major  string
-	Minor  string
-	Patch  string
+	Family     string
+	Major      string
+	Minor      string
+	Patch      string
+	PatchMinor string `yaml:"patch_minor"`
 }
 
 func (uap *uaParser) Match(line string, ua *UserAgent) {
@@ -14,6 +15,7 @@ func (uap *uaParser) Match(line string, ua *UserAgent) {
 		ua.Major = string(uap.Reg.ExpandString(nil, uap.V1Replacement, line, matches))
 		ua.Minor = string(uap.Reg.ExpandString(nil, uap.V2Replacement, line, matches))
 		ua.Patch = string(uap.Reg.ExpandString(nil, uap.V3Replacement, line, matches))
+		ua.PatchMinor = string(uap.Reg.ExpandString(nil, uap.V4Replacement, line, matches))
 	}
 }
 
@@ -39,6 +41,9 @@ func (ua *UserAgent) ToVersionString() string {
 	}
 	if ua.Patch != "" {
 		version += "." + ua.Patch
+	}
+	if ua.PatchMinor != "" {
+		version += "." + ua.PatchMinor
 	}
 	return version
 }
